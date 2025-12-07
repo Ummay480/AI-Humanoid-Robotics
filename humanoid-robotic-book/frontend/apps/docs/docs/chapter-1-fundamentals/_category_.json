@@ -1,0 +1,9 @@
+{
+  "label": "Chapter 1: Fundamentals",
+  "position": 1,
+  "description": "Introduction to robotics, hardware, and software basics",
+  "link": {
+    "type": "generated-index",
+    "description": "Chapter 1 - Fundamentals: Introduction to robotics, hardware, and software basics"
+  }
+}

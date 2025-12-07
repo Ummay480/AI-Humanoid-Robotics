@@ -1,0 +1,9 @@
+{
+  "label": "Chapter 4: Control",
+  "position": 4,
+  "description": "Feedback control, PID, LQR, and AI-based control systems",
+  "link": {
+    "type": "generated-index",
+    "description": "Chapter 4 - Control: Feedback control, PID, LQR, and AI-based control systems"
+  }
+}

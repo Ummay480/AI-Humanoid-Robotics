@@ -1,0 +1,32 @@
+{
+  "name": "@humanoid-robotics/ui",
+  "version": "1.0.0",
+  "description": "Shared React UI components library",
+  "private": true,
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "scripts": {
+    "type-check": "tsc --noEmit",
+    "lint": "eslint src --ext ts,tsx",
+    "lint:fix": "eslint src --ext ts,tsx --fix"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "clsx": "^2.0.0",
+    "tailwind-merge": "^2.2.1",
+    "@humanoid-robotics/types": "file:../types",
+    "@humanoid-robotics/config": "file:../config"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "@types/react": "^18.2.37",
+    "@types/react-dom": "^18.2.15"
+  },
+  "files": [
+    "index.ts",
+    "components",
+    "hooks",
+    "utils"
+  ]
+}

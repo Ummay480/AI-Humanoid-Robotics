@@ -1,0 +1,27 @@
+{
+  "name": "@humanoid-robotics/config",
+  "version": "1.0.0",
+  "description": "Shared configuration (Tailwind, TypeScript, design tokens)",
+  "private": true,
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "exports": {
+    ".": "./index.ts",
+    "./tailwind": "./tailwind.config.ts",
+    "./design-tokens": "./design-tokens.ts"
+  },
+  "scripts": {
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "tailwindcss": "^3.3.6"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  },
+  "files": [
+    "index.ts",
+    "tailwind.config.ts",
+    "design-tokens.ts"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "name": "@humanoid-robotics/types",
+  "version": "1.0.0",
+  "description": "Shared TypeScript type definitions",
+  "private": true,
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "exports": {
+    ".": "./index.ts",
+    "./chapter": "./chapter.ts",
+    "./search": "./search.ts",
+    "./chat": "./chat.ts",
+    "./context": "./context.ts",
+    "./agent": "./agent.ts"
+  },
+  "scripts": {
+    "type-check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  },
+  "files": [
+    "index.ts",
+    "chapter.ts",
+    "search.ts",
+    "chat.ts",
+    "context.ts",
+    "agent.ts"
+  ]
+}

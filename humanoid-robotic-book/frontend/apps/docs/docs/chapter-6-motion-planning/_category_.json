@@ -1,0 +1,9 @@
+{
+  "label": "Chapter 6: Motion Planning",
+  "position": 6,
+  "description": "Path planning, RRT, trajectory optimization",
+  "link": {
+    "type": "generated-index",
+    "description": "Chapter 6 - Motion Planning: Path planning, RRT, trajectory optimization"
+  }
+}

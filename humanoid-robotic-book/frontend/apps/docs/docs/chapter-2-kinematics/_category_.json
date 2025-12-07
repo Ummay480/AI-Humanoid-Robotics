@@ -1,0 +1,9 @@
+{
+  "label": "Chapter 2: Kinematics",
+  "position": 2,
+  "description": "Motion analysis, trajectory planning, and forward/inverse kinematics",
+  "link": {
+    "type": "generated-index",
+    "description": "Chapter 2 - Kinematics: Motion analysis, trajectory planning, and forward/inverse kinematics"
+  }
+}
