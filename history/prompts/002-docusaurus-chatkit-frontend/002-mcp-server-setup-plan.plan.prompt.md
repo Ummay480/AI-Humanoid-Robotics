@@ -27,7 +27,7 @@ You are my coding assistant. I want to set up MCP servers for my project with fu
 
 1. Git MCP Server
 - Initialize a Git MCP server to manage project commits, branching, and Git integration via MCP workflow.
-- Connect it to my local Docusaurus project at frontend/1-docosaurus-textbook.
+- Connect it to my local Docusaurus project at 1-docosaurus-textbook/frontend.
 - Ensure it works seamlessly with Ubuntu / WSL.
 - Provide monitoring/logging for Git operations performed via MCP.
 - Ensure Speckit commands can interact with this server.
