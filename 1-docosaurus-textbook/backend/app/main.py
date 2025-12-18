@@ -12,6 +12,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from app.config import settings
+from app.services import vector_store
 
 # Configure logging
 logging.basicConfig(
@@ -34,13 +35,23 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     logger.info(f"Server: {settings.host}:{settings.port}")
 
     # TODO: Initialize database connections (Phase 2)
-    # TODO: Initialize vector database (Phase 5)
+
+    # Initialize vector database (Phase 5)
+    try:
+        await vector_store.init_qdrant()
+        logger.info("✅ Vector database (Qdrant) initialized successfully")
+    except Exception as e:
+        logger.warning(f"⚠️ Vector database initialization failed: {e}")
+        logger.warning("Chat functionality may be limited without Qdrant")
 
     yield
 
     # Shutdown
     logger.info("🛑 Shutting down Humanoid Robotics Backend...")
     # TODO: Close database connections
+
+    # Close vector database connection
+    await vector_store.close_qdrant()
 
 
 # Create FastAPI application
@@ -85,6 +96,9 @@ async def health_check():
     Health check endpoint
     Returns system status and component availability
     """
+    # Check vector database status
+    vector_db_status = "operational" if vector_store.get_qdrant_client() else "not_configured"
+
     return {
         "status": "healthy",
         "timestamp": datetime.utcnow().isoformat(),
@@ -92,7 +106,7 @@ async def health_check():
         "components": {
             "api": "operational",
             "database": "not_configured",  # Will update in Phase 2
-            "vector_db": "not_configured",  # Will update in Phase 5
+            "vector_db": vector_db_status,  # Phase 5 - Qdrant
             "auth": "not_configured",  # Will update in Phase 3
         },
     }
@@ -124,12 +138,20 @@ async def global_exception_handler(request, exc):
 
 
 # ============================================================
+# API ROUTERS
+# ============================================================
+
+# Phase 5: Chat Router (RAG-powered chat)
+from app.routers.chat import router as chat_router
+
+app.include_router(chat_router, prefix="/api", tags=["chat"])
+
+# ============================================================
 # FUTURE ROUTERS (To be added in later phases)
 # ============================================================
 
 # Phase 3: app.include_router(auth_router, prefix="/api/auth", tags=["auth"])
 # Phase 4: app.include_router(chapters_router, prefix="/api/chapters", tags=["chapters"])
-# Phase 5: app.include_router(chat_router, prefix="/api/chat", tags=["chat"])
 # Phase 6: app.include_router(agents_router, prefix="/api/agents", tags=["agents"])
 # Phase 7: app.include_router(personalization_router, prefix="/api/personalization", tags=["personalization"])
 # Phase 8: app.include_router(translation_router, prefix="/api/translation", tags=["translation"])

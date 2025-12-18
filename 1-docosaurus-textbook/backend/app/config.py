@@ -60,6 +60,18 @@ class Settings(BaseSettings):
     anthropic_api_key: str = Field(default="", description="Anthropic API Key")
     anthropic_model: str = Field(default="claude-sonnet-4-5", description="Anthropic model")
 
+    # Google Gemini (via OpenAI-compatible API)
+    gemini_api_key: str = Field(default="", description="Gemini API Key")
+    gemini_model: str = Field(default="gemini-2.0-flash", description="Gemini model")
+    gemini_base_url: str = Field(
+        default="https://generativelanguage.googleapis.com/v1beta/openai/",
+        description="Gemini OpenAI-compatible base URL",
+    )
+    gemini_embedding_model: str = Field(
+        default="text-embedding-004",
+        description="Gemini embedding model",
+    )
+
     # Rate Limiting
     rate_limit_per_minute: int = Field(default=100, description="Rate limit per minute")
 

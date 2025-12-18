@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import { streamChatResponse } from '../services/chatApi';
 
 /**
  * Generate a context-aware mock response based on user message
@@ -66,27 +67,16 @@ export function useStreamResponse(currentPage?: string) {
       console.log('[useStreamResponse] Current page:', currentPage || 'unknown');
 
       try {
-        // Get mock response based on message content
-        const fullResponse = getMockResponse(userMessage, currentPage);
-
-        console.log('[useStreamResponse] Generated response length:', fullResponse.length);
-
-        // Simulate streaming by sending characters one by one
-        let streamedText = '';
-
-        for (let i = 0; i < fullResponse.length; i++) {
-          // Wait 30ms between characters (adjustable for speed)
-          await new Promise((resolve) => setTimeout(resolve, 30));
-
-          streamedText += fullResponse[i];
-          onChunk(fullResponse[i], streamedText);
-        }
+        // Use real backend API
+        await streamChatResponse(
+          userMessage,
+          currentPage,
+          onChunk,
+          onComplete,
+          onError
+        );
 
         console.log('[useStreamResponse] Stream complete');
-
-        if (onComplete) {
-          onComplete();
-        }
       } catch (error) {
         console.error('[useStreamResponse] Error during streaming:', error);
 
