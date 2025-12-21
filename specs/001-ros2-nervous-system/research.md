@@ -1,8 +1,8 @@
-# Research: Chapter 1 — The Robotic Nervous System (ROS 2)
+# Research: Module 1: The Robotic Nervous System (ROS 2)
 
 **Date**: 2025-12-07
 **Status**: Complete
-**Purpose**: Validate technical decisions and resolve all implementation unknowns
+**Purpose**: Validate technical decisions and resolve all implementation unknowns for ROS 2 robot control module
 
 ---
 
@@ -160,61 +160,74 @@
 
 ---
 
-## Humanoid Robot Model Specification
+## Humanoid Robot Model Specification for Control Applications
 
-### Decision: Simple biped humanoid with 7 DOF (torso, 2 legs, 1 arm)
+### Decision: Humanoid robot with minimum 4 joints and proper control interfaces for ROS 2 control
 
 **Rationale**:
-- 7 DOF is sufficient to demonstrate kinematic chains, joint types, and URDF concepts
-- Biped structure is recognizable as "humanoid" for motivation
-- Simplified design fits within chapter word budget; stays focused on URDF learning
-- Scales easily to more complex models in later chapters
-- Gazebo can simulate without excessive computational overhead
+- Minimum 4 joints (2 hip + 2 knee) is sufficient to demonstrate robot control concepts and URDF with control interfaces
+- Humanoid structure is recognizable and motivates robot control applications
+- Simplified design fits within module scope; stays focused on control interface learning
+- Scales easily to more complex models in later modules
+- Compatible with ros2_control framework for realistic control simulation
+- Gazebo can simulate with physics-based control without excessive computational overhead
 
-**Detailed Specification**:
+**Detailed Specification for Control**:
 
-| Link | Parent | Type | DOF | Purpose |
-|------|--------|------|-----|---------|
-| base_link | (root) | fixed | 0 | Torso base reference frame |
-| torso | base_link | fixed | 0 | Main torso body |
-| left_leg_upper | torso | revolute | 1 | Left thigh joint (hip flexion) |
-| left_leg_lower | left_leg_upper | revolute | 1 | Left knee joint (knee flexion) |
-| right_leg_upper | torso | revolute | 1 | Right thigh joint (hip flexion) |
-| right_leg_lower | right_leg_upper | revolute | 1 | Right knee joint (knee flexion) |
-| right_arm_upper | torso | revolute | 1 | Right shoulder joint (arm raise) |
-| right_arm_lower | right_arm_upper | revolute | 1 | Right elbow joint (arm bend) |
-| **Total** | — | — | 7 | Biped humanoid kinematics |
+| Link | Parent | Type | DOF | Control Limits | Purpose |
+|------|--------|------|-----|----------------|---------|
+| base_link | (root) | fixed | 0 | N/A | Robot base reference frame |
+| torso | base_link | fixed | 0 | N/A | Main torso body |
+| left_leg_upper | torso | revolute | 1 | ±45°, 50 N⋅m, 2 rad/s | Left hip joint for control |
+| left_leg_lower | left_leg_upper | revolute | 1 | 0° to +90°, 40 N⋅m, 2 rad/s | Left knee joint for control |
+| right_leg_upper | torso | revolute | 1 | ±45°, 50 N⋅m, 2 rad/s | Right hip joint for control |
+| right_leg_lower | right_leg_upper | revolute | 1 | 0° to +90°, 40 N⋅m, 2 rad/s | Right knee joint for control |
+| **Total** | — | — | 4+ | — | Humanoid robot control kinematics |
+
+**Control Interface Requirements**:
+- Each joint has defined position, velocity, and effort control capabilities
+- Joint limits properly defined for safe operation in simulation and real hardware
+- URDF includes ros2_control plugin interfaces for realistic control simulation
+- Gazebo plugin interfaces for physics simulation with control feedback
 
 **Alternatives Considered**:
-- 4 DOF (minimal): Too limited; doesn't justify humanoid label
-- 20+ DOF (realistic humanoid): Too complex; exceeds chapter scope
+- 2 DOF (minimal legs): Too limited for realistic humanoid control concepts
+- 20+ DOF (realistic humanoid): Too complex; exceeds module scope for foundational control concepts
 
 **Supporting Sources**:
-- Boston Dynamics Atlas URDF (research reference; complex real-world example)
-- TurtleBot3 Burger URDF (github.com/turtlebot/turtlebot3) — well-documented simple robot
-- DARPA Robotics Challenge robot URDFs (historical reference for humanoid structure)
+- ros2_control Documentation (control.ros.org) — official control framework
+- Gazebo ros2_control Integration (github.com/ros-simulation/gazebo_ros2_control) — control simulation
+- ROS 2 Control Tutorials (docs.ros.org/humble/Tutorials/Advanced/URDF/URDF-Whitelist) — control interfaces
 
 ---
 
-## AI Agent Integration Architecture
+## Python AI Agent Bridging to ROS Controllers Architecture
 
-### Decision: Async pub/sub loop with threshold-based decision logic; <100ms latency requirement
+### Decision: Use rclpy to bridge Python AI agents to ROS 2 robot controllers; <50ms latency requirement for real-time control
 
 **Rationale**:
-- Pub/sub is ROS 2 native pattern for sensor-actuator loops
-- Asynchronous operation prevents blocking; multiple agents can run in parallel
-- Threshold-based logic is simple enough for educational context; demonstrates decision-making
-- <100ms latency is achievable in Python/ROS 2; realistic for robot control tasks
-- Executor pattern (rclpy.spin) handles message delivery automatically
+- rclpy provides Python interface to ROS 2, enabling AI agent integration with robot controllers
+- Pub/sub is ROS 2 native pattern for sensor-actuator loops with real-time control requirements
+- Asynchronous operation prevents blocking; allows real-time control loops
+- <50ms latency is required for stable humanoid robot control; achievable with proper rclpy implementation
+- Executor pattern (rclpy.spin) handles message delivery automatically with minimal overhead
+- Enables integration of Python-based AI algorithms with ROS 2 control systems
+
+**Implementation Architecture**:
+- Python AI agent uses rclpy to subscribe to sensor data (e.g., JointState, IMU)
+- Agent processes sensor data using Python-based decision logic
+- Agent uses rclpy to publish control commands (e.g., JointTrajectory, JointCommands) to ROS controllers
+- Real-time control loop maintains proper timing with ROS 2 rate control
 
 **Alternatives Considered**:
-- Synchronous request/response: Too rigid; doesn't scale to real robot control
-- Machine learning agents: Too advanced for Chapter 1; deferred to later chapters
+- C++ agents: More performant but steeper learning curve; doesn't align with Python AI integration goal
+- Synchronous request/response: Too rigid; doesn't align with real-time robot control requirements
+- Machine learning agents with complex frameworks: Too advanced for foundational module; deferred to later modules
 
 **Supporting Sources**:
-- ROS 2 Executor Design (docs.ros.org/humble/Concepts/Intermediate/ROS-2-Executors)
-- "Reactive Systems in ROS 2" — research on real-time pub/sub patterns
-- Latency measurements in ROS 2 (ros.org documentation on performance)
+- rclpy Documentation (docs.ros.org/humble/p/rclpy) — Python ROS 2 client library
+- ROS 2 Control Integration (control.ros.org) — control system interfaces
+- "Real-time Control in ROS 2" — research on timing constraints and performance
 
 ---
 
@@ -323,18 +336,18 @@
 All technical decisions align with the project constitution:
 
 ✅ **Accuracy**: All choices backed by official documentation, peer-reviewed research, or industry standards.
-✅ **Clarity**: Python, ROS 2 Humble/Iron, and standard message types all prioritize beginner accessibility.
-✅ **Reproducibility**: Code examples in Python; Gazebo simulation environment fully specified with version constraints.
+✅ **Clarity**: Python, ROS 2 Humble/Iron, rclpy, and standard message types all prioritize robot control accessibility.
+✅ **Reproducibility**: Code examples in Python with rclpy; Gazebo simulation environment fully specified with ros2_control integration.
 ✅ **Rigor**: 50%+ peer-reviewed sources; no unverified claims.
 ✅ **Source Verification & Citation**: All decisions traced to authoritative sources; APA citations planned.
-✅ **Functional Accuracy**: Code examples will be tested; URDF will load in standard tools; RAG chatbot context planned.
+✅ **Functional Accuracy**: Code examples will be tested for real-time control; URDF will load in standard tools with control interfaces; RAG chatbot context planned for robot control concepts.
 
 ---
 
 ## Next Steps
 
-1. **Phase 1 Design**: Create data-model.md, contracts, and quickstart.md based on these research decisions.
-2. **Source Collection**: Compile complete bibliography with 50+ sources (minimum 25 peer-reviewed).
-3. **Content Development**: Begin writing chapter sections using specifications from plan.md.
-4. **Code Example Development**: Implement all 7 Python examples and URDF file; validate in ROS 2 environment.
-5. **Testing**: Develop test modules to validate acceptance scenarios from spec.md.
+1. **Phase 1 Design**: Create data-model.md, contracts, and quickstart.md based on these research decisions for robot control module.
+2. **Source Collection**: Compile complete bibliography with 50+ sources (minimum 25 peer-reviewed) focused on robot control and rclpy integration.
+3. **Content Development**: Begin writing module sections using specifications from plan.md, emphasizing robot control concepts.
+4. **Code Example Development**: Implement all Python examples using rclpy for robot control; create URDF with control interfaces; validate in ROS 2 environment with ros2_control.
+5. **Testing**: Develop test modules to validate real-time control acceptance scenarios from spec.md.

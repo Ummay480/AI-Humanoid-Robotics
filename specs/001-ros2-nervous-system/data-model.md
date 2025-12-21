@@ -1,8 +1,8 @@
-# Data Model: Chapter 1 — The Robotic Nervous System (ROS 2)
+# Data Model: Module 1: The Robotic Nervous System (ROS 2)
 
 **Date**: 2025-12-07
 **Status**: Complete
-**Purpose**: Define all data entities, message types, and communication contracts for ROS 2 chapter examples
+**Purpose**: Define all data entities, message types, and communication contracts for ROS 2 robot control module examples
 
 ---
 
@@ -133,57 +133,64 @@ Validation Rules:
 
 ---
 
-## URDF Data Structure (Humanoid Robot)
+## URDF Data Structure (Humanoid Robot for Control)
 
-### Robot: Simple Biped Humanoid (7 DOF)
+### Robot: Humanoid Robot for Control Applications (Minimum 4 Joints)
 
 ```yaml
-Robot Name: simple_humanoid
-Total Links: 8 (base_link + 7 body parts)
-Total Joints: 7 (revolute joints connecting links)
-Total DOF: 7
-Structure Type: Kinematic tree (chain-based)
+Robot Name: humanoid_robot
+Total Links: Minimum 5 (base_link + 4+ body parts)
+Total Joints: Minimum 4 (revolute joints with control interfaces)
+Total DOF: Minimum 4
+Structure Type: Kinematic tree (chain-based) suitable for control applications
 
 Links (Rigid Bodies):
-  - base_link: Origin reference frame; no physical body
-  - torso: Main body; mass ~10 kg; inertia matrix defined
-  - left_leg_upper: Left thigh; mass ~2 kg
-  - left_leg_lower: Left calf; mass ~1.5 kg
-  - right_leg_upper: Right thigh; mass ~2 kg
-  - right_leg_lower: Right calf; mass ~1.5 kg
-  - right_arm_upper: Right upper arm; mass ~1 kg
-  - right_arm_lower: Right forearm; mass ~0.5 kg
+  - base_link: Origin reference frame; no physical body; connects to world
+  - torso: Main body; mass ~10 kg; inertia matrix defined; center of robot
+  - left_leg_upper: Left thigh; mass ~2 kg; control interface for hip actuator
+  - left_leg_lower: Left calf; mass ~1.5 kg; control interface for knee actuator
+  - right_leg_upper: Right thigh; mass ~2 kg; control interface for hip actuator
+  - (Additional links as needed for complete humanoid: head, arms, etc.)
 
-Joints (DOF):
+Joints (DOF with Control Interfaces):
   - base_to_torso: Fixed joint (0 DOF) — connects root frame to torso
-  - torso_left_hip: Revolute; 1 DOF; range ±45°; simulates left hip flexion
-  - left_hip_left_knee: Revolute; 1 DOF; range ±90°; simulates left knee bend
-  - torso_right_hip: Revolute; 1 DOF; range ±45°; simulates right hip flexion
-  - right_hip_right_knee: Revolute; 1 DOF; range ±90°; simulates right knee bend
-  - torso_right_shoulder: Revolute; 1 DOF; range ±90°; simulates arm raise
-  - right_shoulder_right_elbow: Revolute; 1 DOF; range ±120°; simulates arm bend
+  - torso_left_hip: Revolute; 1 DOF; range ±45°; effort limit 50 N⋅m; velocity limit 2 rad/s; controlled via JointState/trajectory_msgs
+  - left_hip_left_knee: Revolute; 1 DOF; range ±90°; effort limit 40 N⋅m; velocity limit 2 rad/s; controlled via JointState/trajectory_msgs
+  - torso_right_hip: Revolute; 1 DOF; range ±45°; effort limit 50 N⋅m; velocity limit 2 rad/s; controlled via JointState/trajectory_msgs
+  - right_hip_right_knee: Revolute; 1 DOF; range ±90°; effort limit 40 N⋅m; velocity limit 2 rad/s; controlled via JointState/trajectory_msgs
+  - (Additional joints for complete humanoid control)
+
+Joint Control Interfaces:
+  - Each joint defines position, velocity, and effort control capabilities
+  - Joint limits defined for safe operation in simulation and real hardware
+  - Control interfaces compatible with ros2_control framework
+  - Gazebo plugin interfaces for physics simulation
 
 Visual & Collision Properties:
   - Each link has visual geometry (for RViz display): cylinder or box meshes
   - Each link has collision geometry (for Gazebo physics): simplified shapes
   - Materials defined for color (red, green, blue for visual distinction)
   - Collision filtering ensures non-adjacent links don't collide
+  - Collision properties tuned for stable humanoid simulation
 
 Inertial Properties:
   - Each link has mass and inertia tensor
   - Inertia calculated assuming uniform density
-  - Realistic but simplified for educational purposes
-  - Sufficient for stable Gazebo simulation
+  - Realistic values for humanoid robot dynamics
+  - Sufficient for stable Gazebo simulation with physics
 
 Coordinate Frames (TF):
   - All frames follow ROS 2 conventions (Z-up, X-forward, Y-left)
-  - Parent frame specified for each joint
-  - Allows transformation trees (e.g., compute end-effector position via kinematic chain)
+  - Parent frame specified for each joint to establish kinematic chain
+  - Allows transformation trees for kinematic calculations and visualization
+  - Base frame for robot localization and navigation
 
 Validation:
   - All joint angles must fall within specified limits
   - Parent/child links must form connected tree (no cycles)
   - Inertia tensors must be positive definite
+  - Joint control interfaces properly defined for ros2_control
+  - URDF loads without errors in RViz, Gazebo, and urdf_parser
 ```
 
 ---
@@ -193,58 +200,61 @@ Validation:
 ### ROS 2 Topic Graph
 
 ```
-User Story 2 (Python Node):
-  simple_node.py (publishes)
-    └── /node_info → rclpy.logging → console
+User Story 2 (Python Robot Control Node using rclpy):
+  robot_control_node.py (publishes/subscribes)
+    ├── /robot_status → rclpy.logging → console
+    └── /robot_control_commands ← rclpy subscriber ← external commands
 
-User Story 3 (Topics & Services):
-  publisher.py (publishes)
-    └── /sensor_data (std_msgs/Float64)
-        ├── subscriber.py (subscribes) → prints data
-        └── [other nodes can subscribe]
+User Story 3 (Robot Control Topics & Services):
+  sensor_publisher.py (publishes)
+    └── /joint_states (sensor_msgs/JointState)
+        ├── robot_controller.py (subscribes) → processes → publishes
+        │   └── /joint_commands (std_msgs/Float64MultiArray)
+        └── [other controllers can subscribe]
 
-  service_server.py (serves)
-    ├── /add_two_ints service
-    └── service_client.py (calls service) → prints result
+  robot_service_server.py (serves)
+    ├── /robot_control_service (custom service)
+    └── robot_service_client.py (calls service) → executes control action
 
-User Story 4 (AI Agent):
-  mock_sensor_publisher.py (publishes)
-    └── /sensor_data (std_msgs/Float64)
-        └── ai_agent.py (subscribes) → processes → publishes
-            └── /robot_commands (std_msgs/Float64)
-                └── controller.py (subscribes) → simulates response
+User Story 4 (Python AI Agent bridged to ROS Controllers using rclpy):
+  humanoid_sensor_publisher.py (publishes)
+    └── /humanoid_sensor_data (sensor_msgs/JointState)
+        └── ai_agent.py (subscribes via rclpy) → processes → publishes via rclpy
+            └── /humanoid_control_commands (trajectory_msgs/JointTrajectory)
+                └── ros2_control_controllers (subscribes) → actuates joints
 
 User Story 5 (URDF):
   humanoid_robot.urdf (static description)
     └── Loaded by Gazebo or RViz
-    └── Defines kinematic tree for User Story 6
+    └── Defines kinematic tree and control interfaces for User Story 6
 
-User Story 6 (Complete Pipeline):
+User Story 6 (Complete Humanoid Robot Control Pipeline):
   gazebo (runs simulation)
-    └── spawn_humanoid_robot (loads URDF)
-        └── joint state publisher
+    └── spawn_humanoid_robot (loads URDF with ros2_control interfaces)
+        └── joint state broadcaster and position/effort controllers
 
-  mock_sensor_publisher.py (publishes sensor data)
-    └── /sensor_data
+  humanoid_sensor_publisher.py (publishes sensor data from simulated humanoid)
+    └── /joint_states (sensor_msgs/JointState)
 
-  ai_agent.py (subscribes to sensor, publishes commands)
-    └── subscribes: /sensor_data
-    └── publishes: /robot_commands
+  ai_agent.py (subscribes to humanoid sensor data via rclpy, publishes control commands via rclpy)
+    └── subscribes: /joint_states (sensor_msgs/JointState)
+    └── publishes: /joint_trajectory (trajectory_msgs/JointTrajectory)
 
-  gazebo_controller.py (subscribes to commands, updates simulation)
-    └── subscribes: /robot_commands
-    └── publishes: /joint_states → Gazebo → visual update
+  ros2_control_controllers (subscribes to commands, updates simulation)
+    └── subscribes: /joint_trajectory (trajectory_msgs/JointTrajectory)
+    └── controls: joint_position_controllers → Gazebo → physical response
 ```
 
-### Topic Specifications
+### Topic Specifications for Robot Control
 
 | Topic Name | Message Type | Direction | Rate | QoS | Purpose |
 |------------|--------------|-----------|------|-----|---------|
-| `/sensor_data` | std_msgs/Float64 | Publish | 10 Hz | Reliable | Sensor readings from mock publisher or robot |
-| `/robot_commands` | std_msgs/Float64 or geometry_msgs/Twist | Publish | 5 Hz | Reliable | Control commands from AI agent |
-| `/scan` | sensor_msgs/LaserScan | Publish | 5 Hz | Best-effort | Lidar data (if implemented in User Story 6) |
-| `/cmd_vel` | geometry_msgs/Twist | Publish | 5 Hz | Reliable | Velocity command for humanoid base motion |
-| `/joint_states` | sensor_msgs/JointState | Publish | 20 Hz | Best-effort | Current joint positions from Gazebo |
+| `/joint_states` | sensor_msgs/JointState | Publish | 50 Hz | Reliable | Current joint positions, velocities, and efforts from humanoid robot |
+| `/joint_commands` | std_msgs/Float64MultiArray | Publish | 50 Hz | Reliable | Joint position commands for humanoid robot actuators |
+| `/joint_trajectory` | trajectory_msgs/JointTrajectory | Publish | 10 Hz | Reliable | Trajectory commands for smooth humanoid robot motion |
+| `/humanoid_sensor_data` | sensor_msgs/JointState | Publish | 50 Hz | Reliable | Sensor readings from humanoid robot joints |
+| `/humanoid_control_commands` | trajectory_msgs/JointTrajectory | Publish | 10 Hz | Reliable | Control commands from AI agent to humanoid robot |
+| `/robot_status` | std_msgs/String | Publish | 1 Hz | Reliable | Robot operational status and health information |
 
 ### Service Specifications
 
@@ -308,17 +318,28 @@ Example Limits:
   - Elbow bend: 0° to +120° (0 to 2.094 radians)
 ```
 
-### Message Rate Constraints
+### Message Rate Constraints for Robot Control
 
 ```yaml
-Topic /sensor_data:
-  - Publishing rate: 10 Hz (0.1 second period)
-  - Subscriber latency: typically <10 ms in ROS 2
-  - Total loop latency: <100 ms required (FR from User Story 4)
+Topic /joint_states:
+  - Publishing rate: 50 Hz (0.02 second period) - real-time control requirement
+  - Subscriber latency: typically <5 ms in ROS 2 for control applications
+  - Total loop latency: <20 ms required for stable humanoid control (FR from User Story 4)
 
-Topic /robot_commands:
-  - Publishing rate: 5 Hz (0.2 second period)
-  - Controller response latency: <50 ms expected
+Topic /joint_commands:
+  - Publishing rate: 50 Hz (0.02 second period) - real-time control requirement
+  - Controller response latency: <10 ms expected for stable control
+  - Message validation: Joint positions must be within URDF joint limits
+
+Topic /joint_trajectory:
+  - Publishing rate: 10 Hz (0.1 second period) - trajectory updates
+  - Controller response latency: <50 ms expected for smooth motion execution
+  - Message validation: Trajectory points must be kinematically feasible
+
+Topic /humanoid_control_commands:
+  - Publishing rate: 10-50 Hz depending on control type (trajectory vs. direct control)
+  - AI agent processing latency: <50 ms required for responsive control
+  - Message validation: Control commands must respect joint limits and dynamics
 ```
 
 ---
@@ -327,12 +348,12 @@ Topic /robot_commands:
 
 This data model defines:
 
-✅ **All message types** used in the chapter (std_msgs, sensor_msgs, geometry_msgs)
-✅ **Communication topology** showing topic connections between nodes
-✅ **URDF structure** for the humanoid robot (7 DOF biped)
-✅ **Service definitions** for synchronous communication examples
-✅ **Data validation rules** and constraints
-✅ **Lifecycle & state transitions** for ROS 2 nodes
-✅ **Message rates & latency** requirements from the specification
+✅ **All message types** used in the module for robot control (sensor_msgs, std_msgs, trajectory_msgs)
+✅ **Communication topology** showing topic connections between robot control nodes
+✅ **URDF structure** for the humanoid robot with proper control interfaces
+✅ **Service definitions** for synchronous robot control communication examples
+✅ **Data validation rules** and constraints for real-time robot control
+✅ **Lifecycle & state transitions** for ROS 2 robot control nodes
+✅ **Message rates & latency** requirements for real-time humanoid robot control
 
-All entities are mapped to user stories and requirements from spec.md. No custom message definitions are required; standard ROS 2 messages keep complexity low and focus on learning patterns.
+All entities are mapped to user stories and requirements from spec.md. Standard ROS 2 messages are used for robot control applications, with emphasis on real-time performance and proper control interfaces compatible with ros2_control framework.
