@@ -1,4 +1,4 @@
-# Implementation Plan: Chapter 1 — The Robotic Nervous System (ROS 2)
+# Implementation Plan: Module 1: The Robotic Nervous System (ROS 2)
 
 **Branch**: `001-ros2-nervous-system` | **Date**: 2025-12-07 | **Spec**: [specs/001-ros2-nervous-system/spec.md](spec.md)
 
@@ -6,19 +6,19 @@
 
 ## Summary
 
-Chapter 1 teaches ROS 2 middleware fundamentals (Nodes, Topics, Services) with reproducible Python code examples and a working URDF humanoid robot model. Students learn pub/sub patterns, create their first ROS 2 nodes, bridge AI agents to robot controllers, and run a complete end-to-end simulation pipeline in Gazebo. All code is executable in ROS 2 Humble/Iron without modification; all claims are verified against official documentation and peer-reviewed sources.
+Module 1 teaches ROS 2 middleware fundamentals for robot control (Nodes, Topics, Services) with reproducible Python code examples using rclpy and a working URDF humanoid robot model with control interfaces. Robotics engineers learn real-time pub/sub patterns, create their first ROS 2 robot control nodes, bridge Python AI agents to ROS controllers using rclpy, and run a complete end-to-end humanoid robot control pipeline in Gazebo with ros2_control. All code is executable in ROS 2 Humble/Iron without modification; all claims are verified against official documentation and peer-reviewed sources.
 
 ## Technical Context
 
 **Language/Version**: Python 3.10+; ROS 2 Humble/Iron
-**Primary Dependencies**: rclpy (ROS 2 Python client), Gazebo, rviz2 (visualization), standard_msgs, sensor_msgs, geometry_msgs
+**Primary Dependencies**: rclpy (ROS 2 Python client), Gazebo, rviz2 (visualization), standard_msgs, sensor_msgs, geometry_msgs, trajectory_msgs, ros2_control
 **Storage**: N/A (educational content; simulations use Gazebo state)
-**Testing**: Manual validation (code runs without error); acceptance scenarios tested by reader execution
+**Testing**: Manual validation (code runs without error); acceptance scenarios tested by reader execution; real-time performance validation
 **Target Platform**: Linux (ROS 2 Humble/Iron standard)
 **Project Type**: Educational content (Markdown/Docusaurus); accompanying code examples (Python scripts, URDF files, launch files)
-**Performance Goals**: Agent decision latency <100ms (User Story 4); pipeline runs stably for 10+ seconds without crashes (User Story 6)
-**Constraints**: Chapter must be 2,000–5,000 words; Flesch-Kincaid grade 10–12 readability; minimum 50% peer-reviewed sources (APA citations)
-**Scale/Scope**: 6 user stories; 10 code examples (Publisher, Subscriber, Service Server/Client, AI agent, URDF, launch file); 1 complete working pipeline
+**Performance Goals**: Real-time control loop latency <20ms (User Story 3); AI agent decision latency <50ms (User Story 4); pipeline runs stably for 10+ seconds without crashes (User Story 6)
+**Constraints**: Module must be 2,000–5,000 words; Flesch-Kincaid grade 10–12 readability; minimum 50% peer-reviewed sources (APA citations); ros2_control integration for realistic control simulation
+**Scale/Scope**: 6 user stories; 10 code examples (Robot control Publisher, Subscriber, Service Server/Client, AI agent with rclpy, URDF with control interfaces, launch file); 1 complete working humanoid robot control pipeline
 
 ## Constitution Check
 
@@ -78,25 +78,26 @@ chapters/01-ros2-nervous-system/
 
 | User Story | Content Section | Code Examples | URDF | Tests | Est. Words |
 |-----------|-----------------|----------------|------|-------|-----------|
-| US1: Understand ROS 2 Architecture | "The Middleware Foundation" | — | — | Conceptual Q&A | 600–800 |
-| US2: Build Python Node | "Your First ROS 2 Node" | 01_node_creation.py | — | test_node_execution | 400–600 |
-| US3: Topics & Services | "Publish, Subscribe, and Serve" | 02–05 (4 examples) | — | test_node_execution | 800–1,000 |
-| US4: AI Agent Bridge | "Connecting AI to ROS 2" | 06_ai_agent.py | — | test_node_execution | 400–600 |
-| US5: URDF Humanoid | "Describing Your Robot" | — | humanoid_robot.urdf | test_urdf_validation | 400–600 |
-| US6: Complete Pipeline | "Bringing It All Together" | launch_pipeline.launch.py | humanoid_robot.urdf | test_pipeline_stability | 300–400 |
-| **Total** | **6 sections** | **7 examples** | **1 file** | **3 test modules** | **3,000–4,600** |
+| US1: Understand ROS 2 Architecture for Robot Control | "The Middleware Foundation for Robot Control" | — | — | Conceptual Q&A | 600–800 |
+| US2: Build Python Robot Control Node | "Your First ROS 2 Robot Control Node with rclpy" | 01_robot_control_node.py | — | test_node_execution | 400–600 |
+| US3: Robot Control Topics & Services | "Real-time Communication for Robot Control" | 02–05 (4 examples: joint state publisher/subscriber, service server/client) | — | test_node_execution, test_realtime_performance | 800–1,000 |
+| US4: Python AI Agent Bridging | "Bridging Python AI Agents to ROS Controllers with rclpy" | 06_ai_agent_bridge.py | — | test_node_execution, test_control_latency | 400–600 |
+| US5: URDF Humanoid for Control | "Humanoid Robot Description with Control Interfaces" | — | humanoid_robot.urdf (with ros2_control interfaces) | test_urdf_validation, test_control_interfaces | 400–600 |
+| US6: Complete Humanoid Robot Control Pipeline | "Real-time Humanoid Robot Control Integration" | launch_pipeline.launch.py | humanoid_robot.urdf (with ros2_control) | test_pipeline_stability, test_control_performance | 300–400 |
+| **Total** | **6 sections** | **7 examples** | **1 file** | **3+ test modules** | **3,000–4,600** |
 
 ## Clarifications Applied
 
 From `/sp.clarify` session (2025-12-07):
 
-1. **Simulation Environment**: Gazebo is the primary tool for User Story 6 and all simulation examples.
-2. **URDF Complexity**: Simple biped humanoid with 7 DOF (torso, 2 legs with 4 joints, 1 arm with 2 joints) for educational clarity.
+1. **Simulation Environment**: Gazebo is the primary tool for humanoid robot control simulation with ros2_control integration for User Story 6 and all control examples.
+2. **URDF Complexity**: Humanoid robot with minimum 5 links and 4 joints with proper control interfaces for ros2_control framework for educational clarity.
+3. **Python Integration Focus**: Using rclpy to bridge Python AI agents to ROS 2 robot controllers, emphasizing real-time control communication patterns.
 
 ## Next Steps
 
-1. **Run `/sp.tasks`** to decompose this plan into actionable tasks by user story.
-2. **Content Development**: Write chapter sections in priority order (P1 → P2 → P3).
-3. **Code Example Testing**: Each example must run without error in ROS 2 Humble/Iron.
-4. **Citation Audit**: Verify 50% peer-reviewed sources; validate all claims in APA citations.
-5. **Docusaurus Integration**: Render chapter with interactive RAG chatbot and personalization hooks.
+1. **Run `/sp.tasks`** to decompose this plan into actionable tasks by user story for robot control module.
+2. **Content Development**: Write module sections in priority order (P1 → P2 → P3) with emphasis on real-time robot control concepts.
+3. **Code Example Testing**: Each example must run without error in ROS 2 Humble/Iron with real-time performance validation.
+4. **Citation Audit**: Verify 50% peer-reviewed sources; validate all claims in APA citations with focus on robot control and rclpy integration.
+5. **Docusaurus Integration**: Render module with interactive RAG chatbot and personalization hooks, emphasizing robot control applications.

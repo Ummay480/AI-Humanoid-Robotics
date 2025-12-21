@@ -1,8 +1,8 @@
 ---
-description: "Task list for Chapter 1: The Robotic Nervous System (ROS 2) content development"
+description: "Task list for Module 1: The Robotic Nervous System (ROS 2) robot control content development"
 ---
 
-# Tasks: Chapter 1 — The Robotic Nervous System (ROS 2)
+# Tasks: Module 1: The Robotic Nervous System (ROS 2)
 
 **Input**: Design documents from `/specs/001-ros2-nervous-system/`
 **Prerequisites**: plan.md (required), spec.md (required for user stories)
@@ -17,7 +17,7 @@ description: "Task list for Chapter 1: The Robotic Nervous System (ROS 2) conten
 
 ## Path Conventions
 
-- **Chapter content**: `chapters/01-ros2-nervous-system/`
+- **Module content**: `chapters/01-ros2-nervous-system/`
 - **Code examples**: `chapters/01-ros2-nervous-system/examples/`
 - **Tests**: `chapters/01-ros2-nervous-system/tests/`
 - **Configuration**: `chapters/01-ros2-nervous-system/config/` (if needed)
