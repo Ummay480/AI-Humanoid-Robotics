@@ -233,13 +233,17 @@ class SensorManager:
         """
         started_count = 0
 
+        # Get snapshot of sensor IDs (start_sensor has its own lock)
         with self._lock:
-            for sensor_id in list(self.sensor_handlers.keys()):
-                if self.start_sensor(sensor_id):
-                    started_count += 1
+            sensor_ids = list(self.sensor_handlers.keys())
+
+        # Start each sensor (each call is thread-safe)
+        for sensor_id in sensor_ids:
+            if self.start_sensor(sensor_id):
+                started_count += 1
 
         self.node.get_logger().info(
-            f"Started {started_count}/{len(self.sensor_handlers)} sensors"
+            f"Started {started_count}/{len(sensor_ids)} sensors"
         )
 
         return started_count
@@ -253,13 +257,17 @@ class SensorManager:
         """
         stopped_count = 0
 
+        # Get snapshot of sensor IDs (stop_sensor has its own lock)
         with self._lock:
-            for sensor_id in list(self.sensor_handlers.keys()):
-                if self.stop_sensor(sensor_id):
-                    stopped_count += 1
+            sensor_ids = list(self.sensor_handlers.keys())
+
+        # Stop each sensor (each call is thread-safe)
+        for sensor_id in sensor_ids:
+            if self.stop_sensor(sensor_id):
+                stopped_count += 1
 
         self.node.get_logger().info(
-            f"Stopped {stopped_count}/{len(self.sensor_handlers)} sensors"
+            f"Stopped {stopped_count}/{len(sensor_ids)} sensors"
         )
 
         return stopped_count
