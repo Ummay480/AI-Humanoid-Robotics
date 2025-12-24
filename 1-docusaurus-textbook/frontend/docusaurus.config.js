@@ -68,13 +68,11 @@ const config = {
           onUntruncatedBlogPosts: 'warn',
         },
         theme: {
-          customCss: ['./src/css/custom.css', './src/css/chat.css'],
+          customCss: './src/css/custom.css',
         },
       }),
     ],
   ],
-
-  themes: ['@docusaurus/theme-common'],
 
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
