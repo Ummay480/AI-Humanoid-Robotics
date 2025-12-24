@@ -88,7 +88,7 @@
 #### 1. Ingest Documents
 
 ```bash
-cd 1-docosaurus-textbook/backend
+cd 1-docusaurus-textbook/backend
 
 # Activate virtual environment
 source venv/bin/activate  # or venv\Scripts\activate on Windows
@@ -136,7 +136,7 @@ curl -X POST http://localhost:8000/api/chat/stream \
 #### 4. Start Frontend
 
 ```bash
-cd 1-docosaurus-textbook/frontend
+cd 1-docusaurus-textbook/frontend
 
 # Install dependencies (if not already done)
 npm install

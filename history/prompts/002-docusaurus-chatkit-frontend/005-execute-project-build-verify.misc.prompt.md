@@ -18,7 +18,7 @@ links:
 files:
   - specs/002-docusaurus-chatkit-frontend/plan.md
   - specs/002-docusaurus-chatkit-frontend/tasks.md
-  - 1-docosaurus-textbook/frontend/build/ (generated)
+  - 1-docusaurus-textbook/frontend/build/ (generated)
 tests:
   - Production build test (npm run build) - PASS
   - Build compilation (client: 16.48s, server: 14.09s) - PASS

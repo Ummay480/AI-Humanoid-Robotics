@@ -31,7 +31,7 @@ The backend virtual environment is broken and needs to be recreated. Run these c
 
 ```bash
 # Navigate to backend directory
-cd /mnt/d/aidd/hackathon/1-docosaurus-textbook/backend
+cd /mnt/d/aidd/hackathon/1-docusaurus-textbook/backend
 
 # Install python3-venv (requires sudo password)
 sudo apt update
@@ -96,7 +96,7 @@ To skip Qdrant, just proceed to Step 3. The backend will log a warning but conti
 If you started Qdrant in Step 2, run document ingestion:
 
 ```bash
-cd /mnt/d/aidd/hackathon/1-docosaurus-textbook/backend
+cd /mnt/d/aidd/hackathon/1-docusaurus-textbook/backend
 
 # Activate venv
 source venv/bin/activate
@@ -118,7 +118,7 @@ This will:
 ### Step 4: Start Backend Server
 
 ```bash
-cd /mnt/d/aidd/hackathon/1-docosaurus-textbook/backend
+cd /mnt/d/aidd/hackathon/1-docusaurus-textbook/backend
 
 # Activate venv
 source venv/bin/activate
@@ -201,7 +201,7 @@ data: {"chunk":null,"done":true,"sources":[...]}
 Open a **new terminal**:
 
 ```bash
-cd /mnt/d/aidd/hackathon/1-docosaurus-textbook/frontend
+cd /mnt/d/aidd/hackathon/1-docusaurus-textbook/frontend
 
 # Install dependencies (if not already done)
 npm install
@@ -315,7 +315,7 @@ If you just want to test quickly (without Qdrant):
 
 ```bash
 # Terminal 1: Backend
-cd /mnt/d/aidd/hackathon/1-docosaurus-textbook/backend
+cd /mnt/d/aidd/hackathon/1-docusaurus-textbook/backend
 sudo apt install -y python3.12-venv  # One-time setup
 python3 -m venv venv --clear
 source venv/bin/activate
@@ -323,7 +323,7 @@ pip install -r requirements.txt
 python run.py
 
 # Terminal 2: Frontend
-cd /mnt/d/aidd/hackathon/1-docosaurus-textbook/frontend
+cd /mnt/d/aidd/hackathon/1-docusaurus-textbook/frontend
 npm start
 
 # Browser: http://localhost:3000

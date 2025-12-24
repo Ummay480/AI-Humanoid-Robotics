@@ -23,9 +23,9 @@ All tasks for the Docusaurus + ChatKit frontend have been completed. The project
 - [x] Build scripts configured (start, build, serve)
 
 **Files Modified**:
-- `1-docosaurus-textbook/frontend/package.json`
-- `1-docosaurus-textbook/frontend/tsconfig.json`
-- `1-docosaurus-textbook/frontend/docusaurus.config.js`
+- `1-docusaurus-textbook/frontend/package.json`
+- `1-docusaurus-textbook/frontend/tsconfig.json`
+- `1-docusaurus-textbook/frontend/docusaurus.config.js`
 
 ---
 
@@ -53,8 +53,8 @@ All tasks for the Docusaurus + ChatKit frontend have been completed. The project
 - [x] Exports useChat hook for consuming components
 
 **Files Created**:
-- `1-docosaurus-textbook/frontend/src/components/chat/ChatProvider.tsx`
-- `1-docosaurus-textbook/frontend/src/hooks/useChat.ts`
+- `1-docusaurus-textbook/frontend/src/components/chat/ChatProvider.tsx`
+- `1-docusaurus-textbook/frontend/src/hooks/useChat.ts`
 
 **Acceptance**: Context provides chat state accessible via useChat hook
 
@@ -69,7 +69,7 @@ All tasks for the Docusaurus + ChatKit frontend have been completed. The project
 - [x] Responsive on mobile devices
 
 **Files Created**:
-- `1-docosaurus-textbook/frontend/src/components/chat/ChatButton.tsx`
+- `1-docusaurus-textbook/frontend/src/components/chat/ChatButton.tsx`
 
 **Acceptance**: Button visible on all pages, triggers chat panel open
 
@@ -85,7 +85,7 @@ All tasks for the Docusaurus + ChatKit frontend have been completed. The project
 - [x] CSS transitions smooth
 
 **Files Created**:
-- `1-docosaurus-textbook/frontend/src/components/chat/ChatPanel.tsx`
+- `1-docusaurus-textbook/frontend/src/components/chat/ChatPanel.tsx`
 
 **Acceptance**: Panel slides in when opened, closes on button click
 
@@ -100,7 +100,7 @@ All tasks for the Docusaurus + ChatKit frontend have been completed. The project
 - [x] Timestamp display (optional)
 
 **Files Created**:
-- `1-docosaurus-textbook/frontend/src/components/chat/ChatBubble.tsx`
+- `1-docusaurus-textbook/frontend/src/components/chat/ChatBubble.tsx`
 
 **Acceptance**: Messages display correctly with proper alignment and styling
 
@@ -115,7 +115,7 @@ All tasks for the Docusaurus + ChatKit frontend have been completed. The project
 - [x] Includes TypingIndicator when loading
 
 **Files Created**:
-- `1-docosaurus-textbook/frontend/src/components/chat/ChatMessages.tsx`
+- `1-docusaurus-textbook/frontend/src/components/chat/ChatMessages.tsx`
 
 **Acceptance**: Message list displays all messages with proper scrolling
 
@@ -131,7 +131,7 @@ All tasks for the Docusaurus + ChatKit frontend have been completed. The project
 - [x] Optional character counter
 
 **Files Created**:
-- `1-docosaurus-textbook/frontend/src/components/chat/ChatInput.tsx`
+- `1-docusaurus-textbook/frontend/src/components/chat/ChatInput.tsx`
 
 **Acceptance**: User can type and send messages via button or Enter key
 
@@ -145,7 +145,7 @@ All tasks for the Docusaurus + ChatKit frontend have been completed. The project
 - [x] Hides when response arrives
 
 **Files Created**:
-- `1-docosaurus-textbook/frontend/src/components/chat/TypingIndicator.tsx`
+- `1-docusaurus-textbook/frontend/src/components/chat/TypingIndicator.tsx`
 
 **Acceptance**: Loading indicator appears during message processing
 
@@ -159,7 +159,7 @@ All tasks for the Docusaurus + ChatKit frontend have been completed. The project
 - [x] Logs error to console for debugging
 
 **Files Created**:
-- `1-docosaurus-textbook/frontend/src/components/chat/ErrorBoundary.tsx`
+- `1-docusaurus-textbook/frontend/src/components/chat/ErrorBoundary.tsx`
 
 **Acceptance**: Errors in chat don't crash entire site
 
@@ -174,7 +174,7 @@ All tasks for the Docusaurus + ChatKit frontend have been completed. The project
 - [x] Default export for easy import
 
 **Files Created**:
-- `1-docosaurus-textbook/frontend/src/components/chat/index.tsx`
+- `1-docusaurus-textbook/frontend/src/components/chat/index.tsx`
 
 **Acceptance**: Single ChatWidget component can be imported and used
 
@@ -189,8 +189,8 @@ All tasks for the Docusaurus + ChatKit frontend have been completed. The project
 - [x] Clear console messages indicate placeholder status
 
 **Files Created**:
-- `1-docosaurus-textbook/frontend/src/hooks/useStreamResponse.ts`
-- `1-docosaurus-textbook/frontend/src/utils/chatHelpers.ts`
+- `1-docusaurus-textbook/frontend/src/hooks/useStreamResponse.ts`
+- `1-docusaurus-textbook/frontend/src/utils/chatHelpers.ts`
 
 **Acceptance**: Placeholder functions work without errors, log clearly
 
@@ -207,7 +207,7 @@ All tasks for the Docusaurus + ChatKit frontend have been completed. The project
 - [x] Preserves all Docusaurus Layout functionality
 
 **Files Created**:
-- `1-docosaurus-textbook/frontend/src/theme/Layout/index.tsx`
+- `1-docusaurus-textbook/frontend/src/theme/Layout/index.tsx`
 
 **Acceptance**: Chat available on all pages without breaking Docusaurus features
 
@@ -222,7 +222,7 @@ All tasks for the Docusaurus + ChatKit frontend have been completed. The project
 - [x] Animations smooth (slide-in, typing indicator)
 
 **Files Created**:
-- `1-docosaurus-textbook/frontend/src/css/chat.css`
+- `1-docusaurus-textbook/frontend/src/css/chat.css`
 
 **Acceptance**: Chat UI looks polished across all devices and themes
 
@@ -237,7 +237,7 @@ All tasks for the Docusaurus + ChatKit frontend have been completed. The project
 - [x] Theme config includes dark mode support
 
 **Files Modified**:
-- `1-docosaurus-textbook/frontend/docusaurus.config.js`
+- `1-docusaurus-textbook/frontend/docusaurus.config.js`
 
 **Acceptance**: Config loads chat styles and site metadata correctly
 
@@ -255,10 +255,10 @@ All tasks for the Docusaurus + ChatKit frontend have been completed. The project
 - [x] All lessons have proper frontmatter and markdown structure
 
 **Files Created**:
-- `1-docosaurus-textbook/frontend/docs/module1/intro.md`
-- `1-docosaurus-textbook/frontend/docs/module1/ros2-nodes.md`
-- `1-docosaurus-textbook/frontend/docs/module1/rclpy-agents.md`
-- `1-docosaurus-textbook/frontend/docs/module1/urdf.md`
+- `1-docusaurus-textbook/frontend/docs/module1/intro.md`
+- `1-docusaurus-textbook/frontend/docs/module1/ros2-nodes.md`
+- `1-docusaurus-textbook/frontend/docs/module1/rclpy-agents.md`
+- `1-docusaurus-textbook/frontend/docs/module1/urdf.md`
 
 **Acceptance**: Module 1 content renders correctly with proper navigation
 
@@ -275,11 +275,11 @@ All tasks for the Docusaurus + ChatKit frontend have been completed. The project
 - [x] All lessons have proper frontmatter and markdown structure
 
 **Files Created**:
-- `1-docosaurus-textbook/frontend/docs/module2/intro.md`
-- `1-docosaurus-textbook/frontend/docs/module2/gazebo-physics.md`
-- `1-docosaurus-textbook/frontend/docs/module2/sensors-depth.md`
-- `1-docosaurus-textbook/frontend/docs/module2/sensors-lidar.md`
-- `1-docosaurus-textbook/frontend/docs/module2/unity-hri.md`
+- `1-docusaurus-textbook/frontend/docs/module2/intro.md`
+- `1-docusaurus-textbook/frontend/docs/module2/gazebo-physics.md`
+- `1-docusaurus-textbook/frontend/docs/module2/sensors-depth.md`
+- `1-docusaurus-textbook/frontend/docs/module2/sensors-lidar.md`
+- `1-docusaurus-textbook/frontend/docs/module2/unity-hri.md`
 
 **Acceptance**: Module 2 content renders correctly with proper navigation
 
@@ -294,7 +294,7 @@ All tasks for the Docusaurus + ChatKit frontend have been completed. The project
 - [x] Current page highlighted in sidebar
 
 **Files Modified**:
-- `1-docosaurus-textbook/frontend/sidebars.js`
+- `1-docusaurus-textbook/frontend/sidebars.js`
 
 **Acceptance**: Sidebar auto-generates from docs/ folder structure
 
@@ -311,7 +311,7 @@ All tasks for the Docusaurus + ChatKit frontend have been completed. The project
 - [x] Responsive on mobile
 
 **Files Created/Modified**:
-- `1-docosaurus-textbook/frontend/src/pages/index.js`
+- `1-docusaurus-textbook/frontend/src/pages/index.js`
 
 **Acceptance**: Homepage loads with hero banner and working CTA
 
@@ -325,7 +325,7 @@ All tasks for the Docusaurus + ChatKit frontend have been completed. The project
 - [x] Responsive grid layout
 
 **Files Created**:
-- `1-docosaurus-textbook/frontend/src/components/HomepageFeatures/index.js`
+- `1-docusaurus-textbook/frontend/src/components/HomepageFeatures/index.js`
 
 **Acceptance**: Features section displays below hero on homepage
 

@@ -45,7 +45,7 @@ specs/002-docusaurus-chatkit-frontend/
 ### Source Code (repository root)
 
 ```text
-1-docosaurus-textbook/frontend/
+1-docusaurus-textbook/frontend/
 ├── src/
 │   ├── components/
 │   │   ├── chat/                    # ✅ Chat components

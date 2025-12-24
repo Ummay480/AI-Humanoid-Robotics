@@ -16,15 +16,15 @@ links:
   adr: null
   pr: https://github.com/Ummay480/AI-Humanoid-Robotics/compare/002-docusaurus-chatkit-frontend
 files:
-  - 1-docosaurus-textbook/frontend/docs/module1/intro.md
-  - 1-docosaurus-textbook/frontend/docs/module1/rclpy-agents.md
-  - 1-docosaurus-textbook/frontend/docs/module1/ros2-nodes.md
-  - 1-docosaurus-textbook/frontend/docs/module1/urdf.md
-  - 1-docosaurus-textbook/frontend/docs/module2/gazebo-physics.md
-  - 1-docosaurus-textbook/frontend/docs/module2/intro.md
-  - 1-docosaurus-textbook/frontend/docs/module2/sensors-depth.md
-  - 1-docosaurus-textbook/frontend/docs/module2/sensors-lidar.md
-  - 1-docosaurus-textbook/frontend/docs/module2/unity-hri.md
+  - 1-docusaurus-textbook/frontend/docs/module1/intro.md
+  - 1-docusaurus-textbook/frontend/docs/module1/rclpy-agents.md
+  - 1-docusaurus-textbook/frontend/docs/module1/ros2-nodes.md
+  - 1-docusaurus-textbook/frontend/docs/module1/urdf.md
+  - 1-docusaurus-textbook/frontend/docs/module2/gazebo-physics.md
+  - 1-docusaurus-textbook/frontend/docs/module2/intro.md
+  - 1-docusaurus-textbook/frontend/docs/module2/sensors-depth.md
+  - 1-docusaurus-textbook/frontend/docs/module2/sensors-lidar.md
+  - 1-docusaurus-textbook/frontend/docs/module2/unity-hri.md
 tests:
   - None (documentation changes)
 ---
