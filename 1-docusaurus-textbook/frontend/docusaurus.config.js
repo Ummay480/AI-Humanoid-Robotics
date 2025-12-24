@@ -20,10 +20,8 @@ const config = {
   },
 
   // Set the production url of your site here
-  // Uses Vercel environment variable when available, falls back to localhost for dev
-  url: process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : process.env.URL || 'https://localhost:3000',
+  // For Vercel: uses deployment URL, falls back to production domain
+  url: 'https://ai-humanoid-robotics-docs.vercel.app',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',
