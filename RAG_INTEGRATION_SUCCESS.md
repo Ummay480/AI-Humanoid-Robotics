@@ -210,7 +210,7 @@ REACT_APP_API_URL=http://localhost:8000
 
 ### To Enable Full RAG:
 ```bash
-cd /mnt/d/aidd/hackathon/1-docosaurus-textbook/backend
+cd /mnt/d/aidd/hackathon/1-docusaurus-textbook/backend
 python3 scripts/ingest_documents.py --docs-dir ../frontend/docs
 ```
 

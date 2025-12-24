@@ -2,7 +2,7 @@
 
 ## Summary
 
-- **Restructured project**: Moved Docusaurus site to `1-docosaurus-textbook/frontend/` for Spec-Kit monorepo pattern
+- **Restructured project**: Moved Docusaurus site to `1-docusaurus-textbook/frontend/` for Spec-Kit monorepo pattern
 - **Integrated ChatKit**: Added complete chat component system with React hooks and TypeScript support
 - **MCP Server Setup**: Configured GitHub MCP server for enhanced development capabilities
 - **Comprehensive Specs**: Added detailed specifications for frontend, MCP setup, and Chapter 1 fundamentals
@@ -10,7 +10,7 @@
 
 ## Key Changes
 
-### Frontend (`1-docosaurus-textbook/frontend/`)
+### Frontend (`1-docusaurus-textbook/frontend/`)
 - Chat components: ChatPanel, ChatBubble, ChatInput, ChatMessages, etc.
 - React hooks: `useChat`, `useStreamResponse` for real-time chat functionality
 - TypeScript configuration and type-safe components
@@ -34,7 +34,7 @@
 
 ## Test Plan
 
-- [ ] Verify Docusaurus site builds successfully: `cd 1-docosaurus-textbook/frontend && npm install && npm run build`
+- [ ] Verify Docusaurus site builds successfully: `cd 1-docusaurus-textbook/frontend && npm install && npm run build`
 - [ ] Test chat components render without errors
 - [ ] Confirm MCP server connection: `claude mcp list`
 - [ ] Validate TypeScript compilation: `npm run typecheck`

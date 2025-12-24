@@ -94,7 +94,7 @@ specs/003-mcp-server-setup/
 
 ### Source Code (repository root)
 
-**Structure Decision**: This is an infrastructure/tooling feature. No source code changes to the existing project structure are required. All changes are configuration-only, preserving the existing frontend project structure at `1-docosaurus-textbook/frontend/`.
+**Structure Decision**: This is an infrastructure/tooling feature. No source code changes to the existing project structure are required. All changes are configuration-only, preserving the existing frontend project structure at `1-docusaurus-textbook/frontend/`.
 
 ## Complexity Tracking
 

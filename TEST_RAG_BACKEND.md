@@ -77,7 +77,7 @@ curl -X POST http://localhost:8000/api/chat \
 
 ### 1. Start Frontend
 ```bash
-cd /mnt/d/aidd/hackathon/1-docosaurus-textbook/frontend
+cd /mnt/d/aidd/hackathon/1-docusaurus-textbook/frontend
 npm start
 ```
 
@@ -92,7 +92,7 @@ npm start
 If you want context-aware responses:
 
 ```bash
-cd /mnt/d/aidd/hackathon/1-docosaurus-textbook/backend
+cd /mnt/d/aidd/hackathon/1-docusaurus-textbook/backend
 
 # Install dependencies
 pip3 install fastapi uvicorn qdrant-client openai tiktoken pydantic pydantic-settings
